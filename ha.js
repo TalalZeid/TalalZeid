@@ -4,20 +4,20 @@ var sum  = 0
 function fetchProduct() {
     return fetch(`https://dummyjson.com/products`)
     .then((res) => res.json());
-  }
+}
   
   
-  function updateProduct() {
+function updateProduct() {
     const parent = $("#parent")
     for(var i=0; i <= list.products.length; i++ ){
         var current = list.products[i]
         current.anzahl = 1
         parent.append(`
-            <div class="col" style="padding:5px 10px 5px 0px">
-                <div class="card h-100">
-                    <img src="${current.images[0]}" class="card-img-top" alt="...">
+            <div class="col" style="padding:5px 10px 5px 0px;">
+                <div class="card h-100" >
+                    <img src="${current.images[0]}" style="border-radius:20px 20px 0px 0px" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <p id="p${i}${i}" class="card-title">${current.title}</p>
+                        <p id="p${i}${i}" class="card-title" style="height:20px">${current.title}</p>
                         <span >${current.price}€</span>
                         <p class="card-text" style="border:solid 1px;width:max-content;display:flex;justify-content:space-between;align-items:start">
                             <div>
@@ -44,7 +44,7 @@ function fetchProduct() {
                         <div class="modal-body">
                             <img style="object-fit:contain;height:200px;width:200px" src="${current.images[0]}" class="card-img-top" alt="..."><br><br>
                             Rabatt: ${current.discountPercentage}%<br>
-                            Bewertung: ${current.rating}%<br>
+                            Bewertung: ${current.rating}<br>
                             Anzahl: ${current.stock}<br>
                             Marke: ${current.brand}
                             <br><br>
@@ -154,7 +154,3 @@ function cal(){
     sum = sum2
     $("#sum").html("Summe: "+sum+"€")
 }
-
-  
-    
-  
