@@ -13,31 +13,28 @@ function fetchProduct() {
         var current = list.products[i]
         current.anzahl = 1
         parent.append(`
-            <div class="col">
+            <div class="col" style="padding:5px 10px 5px 0px">
                 <div class="card h-100">
                     <img src="${current.images[0]}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <div style="display:flex;">
-                            <h5 id="p${i}${i}" class="card-title">${current.title} <br>${current.price}€</h5>
-                        </div>
-                        <p class="card-text" style="border:solid 1px;width:max-content;">
-                        <span onclick="anzahl(false,${current.id})" style="background-color:grey;cursor:pointer;border-right:solid 1px;padding:5px;">-</span>
-                        <span id="anzahl${current.id}" style="border-right:solid 1px;padding:5px">${current.anzahl}</span>
-                        <span onclick="anzahl(true,${current.id})" style="background-color:grey;padding:5px;cursor:pointer;">+</span>
-                        <article style="text-align:start">
-                            ${current.description.substring(0,40)}
-                            <button style="padding:0px;background-color:transparent;color:black;border:none" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-                                ...mehr lesen
-                            </button>
-                        </article>
-                        <button onclick="addprod(${current.id})" style="float:left;background-color:cyan;border-radius:8px;padding:5px;border:none">Zum Warenkorb hinzufügen</button>
+                        <p id="p${i}${i}" class="card-title">${current.title}</p>
+                        <span >${current.price}€</span>
+                        <p class="card-text" style="border:solid 1px;width:max-content;display:flex;justify-content:space-between;align-items:start">
+                            <div>
+                                <span onclick="anzahl(false,${current.id})" style="background-color:cyan;cursor:pointer;padding:5px;">-</span>
+                                <span id="anzahl${current.id}" style="padding:5px 0px 5px 0px">${current.anzahl}</span>
+                                <span onclick="anzahl(true,${current.id})" style="background-color:cyan;padding:5px;cursor:pointer;">+</span>
+                                <p class="desc" data-bs-toggle="modal" data-bs-target="#exampleModal${current.id}">
+                                    ${current.description.substring(0,35)}...
+                                </p>
+                            </div>
+                            <button onclick="addprod(${current.id})" style="float:left;background-color:cyan;border-radius:8px;padding:5px;border:none">Zum Warenkorb hinzufügen</button>
 
                         </p>
                     </div>
                 </div>
-
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="exampleModal${current.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -45,10 +42,11 @@ function fetchProduct() {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            <img style="object-fit:contain;height:200px;width:200px" src="${current.images[0]}" class="card-img-top" alt="..."><br><br>
                             Rabatt: ${current.discountPercentage}%<br>
                             Bewertung: ${current.rating}%<br>
-                            Anzahl: ${current.stock}%<br>
-                            Marke: ${current.brand}%
+                            Anzahl: ${current.stock}<br>
+                            Marke: ${current.brand}
                             <br><br>
                             ${current.description}
                         </div>
@@ -70,25 +68,22 @@ function fetchProduct() {
         $("#cartcontent").append(`
             <div class="card" style="text-align:start;width:max-content">
                 <div class="card-body">
+                <img style="width:100px;height:100px" src="${current.images[0]}">
+                <br>
                 Titel: ${current.title}
                 <br>
                 Preis: ${current.price * current.anzahl}€
-                <br>
-                Anzahl: ${current.anzahl}<br>
+                <br><br>
+                <span onclick="anzahl(false,${current.id})" style="background-color:cyan;cursor:pointer;padding:5px;">-</span>
+                <span id="anzahl${current.id}" style="padding:5px 0px 5px 0px">${current.anzahl}</span>
+                <span onclick="anzahl(true,${current.id})" style="background-color:cyan;padding:5px;cursor:pointer;">+</span>
+                <br><br>
                 <button onclick="removeprod(${current.id});">Löschen</button>
                 </div>
             </div>
         `)
     }
     cal();
-    setTimeout(() => {
-        var t  = ["Du bist wohl reich oder was????","Waldemar ist reich!","Talal ist arm","Thomas lacht immer jeden aus!","Talal ist cool","Talal ist baaackkkk","Talal nice!!!!","Talal ist baba","Wer ist Bill Gates, wenn man Talal ist :)"]
-        var rnd=  Math.floor(Math.random() * t.length);
-
-        $("#alert").toggle()
-        $("#alert h1").html(t[rnd])
-        $("#alert").slideToggle(1500)
-    }, 500);
   }
 
   function anzahl(bool,id){
@@ -105,14 +100,8 @@ function fetchProduct() {
             }
         }
     }
-    setTimeout(() => {
-        var t  = ["Du bist wohl reich oder was????","Waldemar ist reich!","Talal ist arm","Thomas lacht immer jeden aus!","Talal ist cool","Talal ist baaackkkk","Talal nice!!!!","Talal ist baba","Wer ist Bill Gates, wenn man Talal ist :)"]
-        var rnd=  Math.floor(Math.random() * t.length);
-
-        $("#alert").toggle()
-        $("#alert h1").html(t[rnd])
-        $("#alert").slideToggle(1500)
-    }, 500);
+    createnewcart();
+    
   }
 
 fetchProduct()
@@ -165,6 +154,7 @@ function cal(){
     sum = sum2
     $("#sum").html("Summe: "+sum+"€")
 }
+
   
     
   
