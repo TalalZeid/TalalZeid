@@ -1,4 +1,4 @@
-Name: Thomas
+Name: Thomas & Talal
 Pizzabelag: undefined
 Confirmation: Yes
 Dein OS: win32
